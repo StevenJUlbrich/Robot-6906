@@ -29,6 +29,9 @@ public final class Constants {
     public static final int current40AmpPeakCurrentDuration = 200;
     public static final int current40AmpContinuousCurrentLimit = 35;
 
+    // Xbox-Controller
+    public static final int portXboxController = 0;
+
     /**
      * 
      * Drive Constants
@@ -36,17 +39,13 @@ public final class Constants {
      */
     public static final class DriveConstants {
 
-        //Xbox-Controller
-        public static final int portXboxController = 0;
-
-
         // CAN
         public static final int leftMotorMasterID = 1;
         public static final int leftMotorSlaveID = 2;
         public static final int rightMotorMasterID = 3;
         public static final int rightMotorSlaveID = 4;
+        public static final int indexMotorID = 5;
 
-        // DIO
         public static final double wheelDiameter = 6;
         public static final int pulsePerRevolution = 360;
 
@@ -62,6 +61,72 @@ public final class Constants {
         public static final double turnKp = 0.085;
         public static final double turnKi = 0.003;
         public static final double turnKd = 0.5;
+
+        /**
+         * Indexer Constants
+         */
+        public static final class IndexerConstants {
+            // CAN
+            public static final int indexMotorID = 8;
+
+        }
+
+        /**
+         * 
+         * Shooter Constants
+         * 
+         */
+        public static final class ShooterConstants {
+
+            // CAN
+            public static final int topMotorID = 6;
+            public static final int bottomMotorID = 7;
+
+            public static final double speed = 0.5;
+            public static final double backSpeed = -0.4;
+            public static final double unitsPerRotation = 4096.0;
+            public static final double tolerance = 200.0;
+            public static final int kPIDLoopIdx = 0;
+            public static final int kTimeoutMs = 30;
+            public static final double targetHeight = 99.0;
+
+            // this was change in angle / change in height of cam from ground
+            public static final double angleHeightMultiplier = 0.294;
+
+            public static final double closestRangeInches = 120.0;
+            public static final double farthestRangeInches = 300.0;
+
+            public static final double closestRangeTopRPM = 1000;
+            public static final double farthestRangeTopRPM = 2000;
+
+            public static final double closestRangeBottomRPM = 2900;
+            public static final double farthestRangeBottomRPM = 4400;
+
+            public static final double RPMLowLimit = 700;
+            public static final double RPMHighLimit = 4800;
+        }
+
+        /**
+         * 
+         * Spinner Constants
+         * 
+         */
+        public static final class SpinnerConstants {
+
+            // CAN
+            public static final int motorID = 9;
+
+            public static final double speed = 0.6;
+
+            // mathing
+            public static final int unitsPerRotation = 4096;
+            public final static double wheelDiameter = 2.0;
+            public final static double targetSpins = 3.5;
+            public final static double targetUnitsForTargetSpins = ((100 / (wheelDiameter * Math.PI)) * targetSpins)
+                    * unitsPerRotation;
+
+        }
+
     }
 
 }
