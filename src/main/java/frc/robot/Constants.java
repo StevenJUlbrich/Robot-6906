@@ -36,6 +36,10 @@ public final class Constants {
      */
     public static final class DriveConstants {
 
+        //Xbox-Controller
+        public static final int portXboxController = 0;
+
+
         // CAN
         public static final int leftMotorMasterID = 1;
         public static final int leftMotorSlaveID = 2;
