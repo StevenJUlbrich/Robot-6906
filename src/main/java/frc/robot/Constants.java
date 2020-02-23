@@ -47,14 +47,13 @@ public final class Constants {
         public static final int indexMotorID = 5;
 
         public static final double wheelDiameter = 0.2032;
-        public static final int pulsePerRevolution = 360;
 
         public static final boolean gyroReversed = false;
 
         public static final double turnToleranceDeg = 5.0;
         public static final double turnRateToleranceDegPerS = 10.0;
 
-        public static final double moveKp = 0.0;
+        public static final double moveKp = 0.1;
         public static final double moveKi = 0.0;
         public static final double moveKd = 0.0;
 
@@ -70,7 +69,7 @@ public final class Constants {
             public static final int indexMotorID = 8;
             public static final double speed = 0.5;
             public static final double backSpeed = -0.4;
-            public static final double unitsPerRotation = 4096.0;
+            public static final double unitsPerRotation = 42.0;
             public static final double tolerance = 200.0;
             public static final int kPIDLoopIdx = 0;
             public static final int kTimeoutMs = 30;
@@ -134,5 +133,7 @@ public final class Constants {
         }
 
     }
+
+	
 
 }
