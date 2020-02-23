@@ -47,6 +47,7 @@ public final class Constants {
         public static final int indexMotorID = 5;
 
         public static final double wheelDiameter = 0.2032;
+        public static final int pulsePerRevolution = 42;
 
         public static final boolean gyroReversed = false;
 
