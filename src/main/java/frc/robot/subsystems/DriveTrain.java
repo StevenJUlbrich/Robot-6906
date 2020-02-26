@@ -13,9 +13,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.*;
-
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class DriveTrain extends SubsystemBase {
 
@@ -27,10 +25,15 @@ public class DriveTrain extends SubsystemBase {
    public static  SpeedController rightSideGroup;
    public static DifferentialDrive drive;
 
+   
+
     public DriveTrain() {
 
         //Reset NEO Spark Controllers to Factory Defaults
-        m_leftMaster.
+        m_leftMaster.restoreFactoryDefaults();
+        m_leftSlave.restoreFactoryDefaults();
+        m_rightMaster.restoreFactoryDefaults();
+        m_rightSlave.restoreFactoryDefaults();
 
         
     
