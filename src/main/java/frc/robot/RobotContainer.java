@@ -4,14 +4,17 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
-
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.subsystems.DriveTrain;
+//import frc.robot.subsystems.Launcher;
+import frc.robot.Constants.OIConstants;
+import frc.robot.commands.Auto_MoveFwd_1meter;
+//import frc.robot.commands.Auto_Move_S_curve;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -20,19 +23,36 @@ import edu.wpi.first.wpilibj2.command.Command;
  * (including subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
 
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
-
+  DriveTrain m_robotDrive;
+  //Launcher m_launcher;
+  Auto_MoveFwd_1meter m_autoCommand;
+  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  XboxController m_otherController = new XboxController(OIConstants.kOtherControllerPort);
 
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    m_robotDrive = new DriveTrain();
+    m_autoCommand = new Auto_MoveFwd_1meter(m_robotDrive);
+    //m_launcher = new Launcher();
+    // m_autoCommand = new Auto_Move_S_curve(m_robotDrive);
     // Configure the button bindings
     configureButtonBindings();
+
+    m_robotDrive.setDefaultCommand(
+    new RunCommand(() -> m_robotDrive
+      .arcadeDrive(m_driverController.getY(GenericHID.Hand.kLeft),
+        m_driverController.getX(GenericHID.Hand.kRight)), m_robotDrive));
+    
+        /**
+        m_launcher.setDefaultCommand(
+          new RunCommand(() -> m_launcher
+          .launch(m_otherController.getY(GenericHID.Hand.kLeft)), m_launcher)
+        );
+         */
   }
 
   /**
@@ -52,6 +72,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-    return m_autoCommand;
+    return m_autoCommand.getAutoCommand();
   }
 }

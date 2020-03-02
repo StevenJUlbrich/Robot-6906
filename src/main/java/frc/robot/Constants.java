@@ -7,6 +7,10 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax.IdleMode;
+
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -31,6 +35,10 @@ public final class Constants {
 
     // Xbox-Controller
     public static final int portXboxController = 0;
+
+
+
+ 
 
     /**
      * 
@@ -62,20 +70,77 @@ public final class Constants {
         public static final double turnKi = 0.003;
         public static final double turnKd = 0.5;
 
-        /**
-         * Indexer Constants
-         */
-        public static final class IndexerConstants {
-            // CAN
-            public static final int indexMotorID = 8;
-            public static final double speed = 0.5;
-            public static final double backSpeed = -0.4;
-            public static final double unitsPerRotation = 42.0;
-            public static final double tolerance = 200.0;
-            public static final int kPIDLoopIdx = 0;
-            public static final int kTimeoutMs = 30;
+        public static final double kP = 5e-5;
+        public static final double kI = 1e-6;
+        public static final double kD = 0;
 
-        }
+        public static final double kIz = 0; 
+        public static final double kFF = 0.000156; 
+        public static final double kMaxOutput = 1; 
+        public static final double kMinOutput = -1;
+
+        //Gyro tuning paramenter indicates how close to 
+        //On Target    
+        public static final double kToleranceDegrees = 2.0f;
+
+		public static final boolean LeftInvertedBoolean = false;
+		public static final IdleMode IdleMode = null;
+		public static final boolean RightInvertedBoolean = false;
+        public static final double kDriveGearRatio = 10.71;
+        public static final double kWheelDiameterMeters = 0.1524;
+
+        public static final int kNeoBuiltinCPR = 42;
+        //Convert the Rotations reported by built-in neo encoder to Meters as needed by the 
+        // WPILIB's Ramsette controller
+        public static final double kNeoPositionConversionFactor = (1/kDriveGearRatio) * Math.PI * kWheelDiameterMeters;
+        // Convert RPM reported by built-in neo encoder to Meters/sec as needed by the 
+        // WPILIB's Ramsette controller
+        public static final double kNeoVelocityConversionFactor = (1/60) * (1/kDriveGearRatio) * Math.PI * kWheelDiameterMeters;
+        // public static final int kEncoderCPR = kNeoBuiltinCPR;
+        // public static final double kWheelDiameterInches = 6;
+        // public static final double kEncoderDistancePerPulse =
+        //     // Assumes the encoders are NOT directly mounted on the wheel shafts
+        //     (kWheelDiameterInches * Math.PI) / (double) (kEncoderCPR * kDriveGearRatio);
+        
+        public static final double kTrackwidthMeters = 0.6713;
+        public static final DifferentialDriveKinematics kDriveKinematics = new DifferentialDriveKinematics(kTrackwidthMeters);
+
+        public static final int[] kLeftEncoderPorts = new int[]{0, 1};
+        public static final int[] kRightEncoderPorts = new int[]{2, 3};
+        public static final boolean kLeftEncoderReversed = true;
+        public static final boolean kRightEncoderReversed = false;
+
+
+        public static final double kLeftEncoderPulsesPerRev = kNeoBuiltinCPR * 4 * kDriveGearRatio;
+        public static final double kRightEncoderPulsesPerRev = kNeoBuiltinCPR * 4 * kDriveGearRatio;
+        // public static final double kLeftEncoderPulsesPerRev = 8192; // Rev Throughbore encoder
+        // public static final double kRightEncoderPulsesPerRev = 8192; // Rev Throughbore encoder
+        public static final double kLeftMetersPerPulse = Math.PI * kWheelDiameterMeters / kLeftEncoderPulsesPerRev;
+        public static final double kRightMetersPerPulse = Math.PI * kWheelDiameterMeters / kRightEncoderPulsesPerRev;
+
+
+        public static final int kNeoEncoderPulsesPerRev = kNeoBuiltinCPR * 4;
+        public static final double kNeoEncoderMetersPerPulse =
+            // Assumes the encoders are directly mounted on the wheel shafts
+            (kWheelDiameterMeters * Math.PI) / (double) (kNeoEncoderPulsesPerRev * kDriveGearRatio);
+    
+        public static final boolean kGyroReversed = true;
+    
+        // kS, kV, kA values from frc-characterization tool
+        public static final double ksVolts = 0.15;
+        public static final double kvVoltSecondsPerMeter = 2.71;
+        public static final double kaVoltSecondsSquaredPerMeter = 0.367;
+        // public static final double kTrackwidthMeters = 0.6713;
+    
+        // Example value only - as above, this must be tuned for your drive!
+        public static final double kPDriveVel = 1.34; // value from characterization tool is 13.4!
+       
+
+
+        
+        
+
+
 
         /**
          * 
@@ -134,6 +199,44 @@ public final class Constants {
         }
 
     }
+
+    /**
+         * Indexer Constants
+         */
+        public static final class IndexerConstants {
+            // CAN
+            public static final int indexMotorID = 8;
+            public static final double speed = 0.5;
+            public static final double backSpeed = -0.4;
+            public static final double unitsPerRotation = 42.0;
+            public static final double tolerance = 200.0;
+            public static final int kPIDLoopIdx = 0;
+            public static final int kTimeoutMs = 30;
+
+        }
+
+        public static final class OIConstants {
+            public static final int kDriverControllerPort = 0;
+            public static int kOtherControllerPort = 1;
+        }
+    
+        public static final class AutoConstants {
+            public static final double kMaxSpeedMetersPerSecond = 3;
+            public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+    
+            // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+            public static final double kRamseteB = 2;
+            public static final double kRamseteZeta = 0.7;
+        }
+
+        //AutoPaths must be generated
+    
+        public static final class AutoPathsConstants {
+            public static final int kPos3Path1_numSegments = 4;
+            public static final String[] kPos3Path1 = 
+                new String[] {"paths/Auto_pos3_path1_segment1.wpilib.json", "paths/Auto_pos3_path1_segment2.wpilib.json",
+                    "paths/Auto_pos3_path1_segment3.wpilib.json", "paths/Auto_pos3_path1_segment4.wpilib.json"};
+        }
 
 	
 
