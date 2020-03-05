@@ -14,7 +14,7 @@ import frc.robot.subsystems.DriveTrain;
 //import frc.robot.subsystems.Launcher;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.Auto_MoveFwd_1meter;
-//import frc.robot.commands.Auto_Move_S_curve;
+import frc.robot.commands.Auto_Move_S_curve;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -27,6 +27,7 @@ public class RobotContainer {
   DriveTrain m_robotDrive;
   //Launcher m_launcher;
   Auto_MoveFwd_1meter m_autoCommand;
+  Auto_Move_S_curve m_autoCommandS_curve;
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   XboxController m_otherController = new XboxController(OIConstants.kOtherControllerPort);
 
@@ -38,7 +39,7 @@ public class RobotContainer {
     m_robotDrive = new DriveTrain();
     m_autoCommand = new Auto_MoveFwd_1meter(m_robotDrive);
     //m_launcher = new Launcher();
-    // m_autoCommand = new Auto_Move_S_curve(m_robotDrive);
+    m_autoCommandS_curve = new Auto_Move_S_curve(m_robotDrive);
     // Configure the button bindings
     configureButtonBindings();
 

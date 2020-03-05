@@ -221,7 +221,17 @@ public class DriveTrain extends SubsystemBase {
     m_drive.setMaxOutput(maxOutput);
   }
 
-
+  //IMU AHRS 
+  public double getPitch() {
+    return m_gyro.getPitch();
+  }
+  
+  public double getYaw() {
+    return m_gyro.getYaw();
+  }
+  public double getRoll() {
+    return m_gyro.getRoll();
+  }
   /**
    * Zeroes the heading of the robot.
    */
