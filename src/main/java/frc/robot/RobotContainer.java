@@ -7,64 +7,62 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
-import frc.robot.subsystems.DriveTrain;
-//import frc.robot.subsystems.Launcher;
+import frc.robot.subsystems.*;
 import frc.robot.Constants.OIConstants;
-import frc.robot.commands.Auto_MoveFwd_1meter;
-import frc.robot.commands.Auto_Move_S_curve;
+import frc.robot.commands.*;
+import frc.robot.Constants;
 
 /**
- * This class is where the bulk of the robot should be declared.  Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls).  Instead, the structure of the robot
- * (including subsystems, commands, and button mappings) should be declared here.
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a "declarative" paradigm, very little robot logic should
+ * actually be handled in the {@link Robot} periodic methods (other than the
+ * scheduler calls). Instead, the structure of the robot (including subsystems,
+ * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
 
-  DriveTrain m_robotDrive;
-  //Launcher m_launcher;
-  Auto_MoveFwd_1meter m_autoCommand;
-  Auto_Move_S_curve m_autoCommandS_curve;
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-  XboxController m_otherController = new XboxController(OIConstants.kOtherControllerPort);
+  private final DriveTrain m_drive = new DriveTrain();
+  private final Shooter m_shooter = new Shooter();
 
+  public XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  public XboxController m_otherController = new XboxController(OIConstants.kOtherControllerPort);
+
+  private final AutonomousCommand m_autonomousCommand = new AutonomousCommand(m_drive, m_shooter);
 
   /**
-   * The container for the robot.  Contains subsystems, OI devices, and commands.
+   * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    m_robotDrive = new DriveTrain();
-    m_autoCommand = new Auto_MoveFwd_1meter(m_robotDrive);
-    //m_launcher = new Launcher();
-    m_autoCommandS_curve = new Auto_Move_S_curve(m_robotDrive);
+
     // Configure the button bindings
     configureButtonBindings();
 
-    m_robotDrive.setDefaultCommand(
-    new RunCommand(() -> m_robotDrive
-      .arcadeDrive(m_driverController.getY(GenericHID.Hand.kLeft),
-        m_driverController.getX(GenericHID.Hand.kRight)), m_robotDrive));
-    
-        /**
-        m_launcher.setDefaultCommand(
-          new RunCommand(() -> m_launcher
-          .launch(m_otherController.getY(GenericHID.Hand.kLeft)), m_launcher)
-        );
-         */
+    m_drive.setDefaultCommand(new ArcadeDrive(m_drive, () -> m_driverController.getY(Hand.kLeft),
+        () -> m_driverController.getX(Hand.kRight)));
+
   }
 
   /**
-   * Use this method to define your button->command mappings.  Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
-   * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * Use this method to define your button->command mappings. Buttons can be
+   * created by instantiating a {@link GenericHID} or one of its subclasses
+   * ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then
+   * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
   }
 
+  /**
+   * A simple getter method for the drivetrain system
+   * 
+   * @return m_drive
+   */
+  public DriveTrain getDrivetrain() {
+    return m_drive;
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -72,7 +70,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
-    return m_autoCommand.getAutoCommand();
+    return m_autonomousCommand;
   }
 }

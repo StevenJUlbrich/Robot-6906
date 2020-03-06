@@ -24,6 +24,11 @@ import com.revrobotics.CANEncoder;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
+//import edu.wpi.first.networktables.NetworkTable;
+//import edu.wpi.first.networktables.NetworkTableInstance;
+
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.networktables.NetworkTable;
 
 public class DriveTrain extends SubsystemBase {
 
@@ -247,6 +252,11 @@ public class DriveTrain extends SubsystemBase {
   public double getHeading() {
         return Math.IEEEremainder(m_gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
   }
+
+public void stopMotors() {
+  m_leftMaster.setVoltage(0);
+  m_rightMaster.setVoltage(0);
+}
 
  
 

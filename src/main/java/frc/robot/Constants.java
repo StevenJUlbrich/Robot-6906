@@ -33,9 +33,47 @@ public final class Constants {
     public static final int current40AmpPeakCurrentDuration = 200;
     public static final int current40AmpContinuousCurrentLimit = 35;
 
-    // Xbox-Controller
-    public static final int portXboxController = 0;
+     /*
+    XBOX BUTTON MAP KEY:
+    1 = A
+    2 = B
+    3 = X
+    4 = Y
+    5 = left bumper
+    6 = right bumper
+    7 = back
+    8 = start
+    9 = left stick click
+    10 = right stick click
+    */
 
+    // Xbox Map
+    public final int kXboxControllerPort = 0;
+
+    public final int A = 1;
+    public final int B = 2;
+    public final int X = 3;
+    public final int Y = 4;
+
+    public final int LB = 5;
+    public final int RB = 6;
+
+    public final int BACK = 7;
+    public final int START = 8;
+
+    public final int LT = 2;
+    public final int RT = 3;
+
+    public final int LS = 9;
+    public final int RS = 10;
+
+    public final int LY = 1;
+    public final int RX = 4;
+
+    public final int LSX = 0;
+    public final int LSY = 1;
+    public final int RSX = 4;
+    public final int RSY = 5;
 
 
  
@@ -175,6 +213,17 @@ public final class Constants {
 
             public static final double RPMLowLimit = 700;
             public static final double RPMHighLimit = 4800;
+
+            //PID
+            public static final double kP =  6e-5;
+            public static final double kI = 0;
+            public static final double kD = 0;
+            public static final double kIz = 0;
+            public static final double kFF = 0.000015;
+            public static final double kMaxOutput = 1;
+            public static final double kMinOutput = -1;
+            
+
         }
 
         /**
