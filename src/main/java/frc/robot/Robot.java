@@ -8,9 +8,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.OIConstants;
+import frc.robot.commands.ActivateFeederCommand;
 import frc.robot.subsystems.*;
 
 
@@ -27,6 +31,12 @@ public class Robot extends TimedRobot {
   private static  RobotContainer m_robotContainer;
   private static DriveTrain m_drive = new DriveTrain();
   private static Shooter m_shooter;
+  public static XboxController m_otherController = new XboxController(OIConstants.kOtherControllerPort);
+  public Shooter shooterSubsystem;
+  public ActivateFeederCommand activateFeederCommand;
+
+  final JoystickButton activateFeederButton = new JoystickButton(m_otherController, 6);
+
 
 
   /**
@@ -38,6 +48,8 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    shooterSubsystem = m_robotContainer.getShooterSubsystem();
+    activateFeederCommand = new ActivateFeederCommand(shooterSubsystem);
     //m_drive = new DriveTrain();
 
     
@@ -134,9 +146,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    m_drive.arcadeDrive(RobotContainer.m_driverController.getY(Hand.kRight) * -1, RobotContainer.m_driverController.getX(Hand.kLeft) * -1);
+    m_drive.arcadeDrive(RobotContainer.m_driverController.getY(Hand.kRight) * -1, RobotContainer.m_driverController.getX(Hand.kLeft));
     System.out.println("Y value: " + RobotContainer.m_driverController.getY(Hand.kRight));
     System.out.println("X value: " + RobotContainer.m_driverController.getX(Hand.kLeft));
+
+    if( activateFeederButton.get()){
+      activateFeederCommand.execute();
+    }
+    else{
+      activateFeederCommand.cancel();
+    }
+
   }
 
   @Override

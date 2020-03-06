@@ -43,12 +43,14 @@ public class RobotContainer {
    ShooterMediumshotCommand shooterMediumshotCommand = new ShooterMediumshotCommand(shooterSubsystem);
    ShooterShortshotCommand shooterShortshotCommand = new ShooterShortshotCommand(shooterSubsystem);
    ShooterDumpshotCommand shooterDumpshotCommand = new ShooterDumpshotCommand(shooterSubsystem);
+
+   //ActivateFeederCommand
+   ActivateFeederCommand activateFeederCommand = new ActivateFeederCommand(shooterSubsystem);
    //------
 
 
-  //private final DriveTrain m_drive = new DriveTrain();
-  private final Shooter m_shooter = new Shooter();
 
+  //private final DriveTrain m_drive = new DriveTrain();
   public static XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   public static XboxController m_otherController = new XboxController(OIConstants.kOtherControllerPort);
 
@@ -63,6 +65,8 @@ public class RobotContainer {
     configureButtonBindings();
 
   }
+
+  public Shooter getShooterSubsystem() {return shooterSubsystem;}
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
@@ -91,8 +95,6 @@ public class RobotContainer {
 
 
     //---- Shooter mappings and setting the values ----
-    double indexer = m_otherController.getRawAxis(2);
-    double xyz = m_otherController.getRawAxis(3);
 
     //High = B, Medium = A, Low = X
     final JoystickButton longshotButton = new JoystickButton(m_otherController, Constants.Y);
@@ -100,10 +102,16 @@ public class RobotContainer {
     final JoystickButton shortshotButton = new JoystickButton(m_otherController, Constants.A);
     final JoystickButton dumpshotButton = new JoystickButton(m_otherController, Constants.X);
 
+    //final JoystickButton activateFeederButton = new JoystickButton(m_otherController, 6);
+
     longshotButton.whenHeld(shooterLongshotCommand);
     mediumshotButton.whenHeld(shooterMediumshotCommand);
     shortshotButton.whenHeld(shooterShortshotCommand);
     dumpshotButton.whenHeld(shooterDumpshotCommand);
+
+    //activateFeederButton.whenHeld(activateFeederCommand);
+
+    
   }
 
   /**

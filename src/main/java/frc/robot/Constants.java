@@ -228,8 +228,8 @@ public final class Constants {
             public static final double RPMHighLimit = 4800;
 
             //PID
-            public static final double kP =  6e-5;
-            public static final double kI = 0;
+            public static final double kP =  5e-5;
+            public static final double kI =  1e-6;
             public static final double kD = 0;
             public static final double kIz = 0;
             public static final double kFF = 0.000015;

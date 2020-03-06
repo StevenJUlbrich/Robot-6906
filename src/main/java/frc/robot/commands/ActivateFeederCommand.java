@@ -8,17 +8,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 
-public class ShooterLongshotCommand extends CommandBase {
+public class ActivateFeederCommand extends CommandBase {
 
   private Shooter shooterSubsystem;
-
+  
   /**
-   * Creates a new ShooterLongshotCommand.
+   * Creates a new ActivateFeederCommand.
    */
-  public ShooterLongshotCommand(Shooter shooterSubsystem) {
+  public ActivateFeederCommand(Shooter shooterSubsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooterSubsystem = shooterSubsystem;
     addRequirements(shooterSubsystem);
@@ -32,13 +31,13 @@ public class ShooterLongshotCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    shooterSubsystem.set(Constants.LONG_SHOT_TOP_MOTOR, Constants.LONG_SHOT_BOTTOM_MOTOR);
+    shooterSubsystem.activateFeeder();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    shooterSubsystem.stop();
+    shooterSubsystem.stopFeeder();
   }
 
   // Returns true when the command should end.

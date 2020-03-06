@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -16,10 +17,11 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.Constants.DriveConstants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
-  private TalonSRX indexMotor;
+  private VictorSPX indexMotor = new VictorSPX(7);
   private CANSparkMax m_motorTop;
   private CANSparkMax m_motorBottom;
   private CANPIDController m_pidControllerTop;
@@ -30,8 +32,6 @@ public class Shooter extends SubsystemBase {
    * Creates a new Shooter.
    */
   public Shooter() {
-
-    indexMotor = new TalonSRX(7);
     m_motorTop = new CANSparkMax(ShooterConstants.topMotorID, MotorType.kBrushless);
     m_motorBottom = new CANSparkMax(ShooterConstants.bottomMotorID, MotorType.kBrushless);
 
@@ -71,22 +71,27 @@ public class Shooter extends SubsystemBase {
     m_pidControllerBottom.setIZone(ShooterConstants.kIz);
     m_pidControllerBottom.setFF(ShooterConstants.kFF);
     m_pidControllerBottom.setOutputRange(ShooterConstants.kMinOutput, ShooterConstants.kMaxOutput);
-    
-
-
   }
 
 public void set(Double motorTopMaxRPM, Double motorBottomMaxRPM){
-  indexMotor = new TalonSRX(7);
-  indexMotor.set(ControlMode.PercentOutput, 1.0);
   m_pidControllerTop.setReference(motorTopMaxRPM, ControlType.kVelocity);
   m_pidControllerBottom.setReference(motorBottomMaxRPM, ControlType.kVelocity);
+}
+
+public void activateFeeder() {
+  indexMotor.set(ControlMode.PercentOutput, 5.0);
+  // m_pidControllerTop.setReference(Constants.LONG_SHOT_TOP_MOTOR, ControlType.kVelocity);
+  // m_pidControllerBottom.setReference(Constants.LONG_SHOT_BOTTOM_MOTOR, ControlType.kVelocity);
+}
+
+public void stopFeeder() {
+  indexMotor.set(ControlMode.PercentOutput, 0.0);
 }
 
 public void stop(){
   m_pidControllerTop.setReference(0, ControlType.kVelocity);
   m_pidControllerBottom.setReference(0, ControlType.kVelocity);
-
+  indexMotor.set(ControlMode.PercentOutput, 0.0);
 }
 
   @Override

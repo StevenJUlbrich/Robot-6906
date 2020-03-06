@@ -36,7 +36,7 @@ public class IntakeSubsystem extends SubsystemBase {
   public void activateIntake() {
     //TODO Move to Constants file
     //activates the motor at half speed.  This can be altered.
-    final double VICTOR_PERCENT_OUTPUT_HALF_SPEED_INTAKE = 0.5;
+    final double VICTOR_PERCENT_OUTPUT_HALF_SPEED_INTAKE = 0.50;
     //intakeTalon.set(TalonSRXControlMode.PercentOutput, TALON_PERCENT_OUTPUT_HALF_SPEED_INTAKE);
     intakeVictorSPX.set(VictorSPXControlMode.PercentOutput, VICTOR_PERCENT_OUTPUT_HALF_SPEED_INTAKE);
 
