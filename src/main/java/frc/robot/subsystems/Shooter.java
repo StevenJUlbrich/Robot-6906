@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -17,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
+  private TalonSRX indexMotor;
   private CANSparkMax m_motorTop;
   private CANSparkMax m_motorBottom;
   private CANPIDController m_pidControllerTop;
@@ -28,6 +31,7 @@ public class Shooter extends SubsystemBase {
    */
   public Shooter() {
 
+    indexMotor = new TalonSRX(7);
     m_motorTop = new CANSparkMax(ShooterConstants.topMotorID, MotorType.kBrushless);
     m_motorBottom = new CANSparkMax(ShooterConstants.bottomMotorID, MotorType.kBrushless);
 
@@ -73,11 +77,10 @@ public class Shooter extends SubsystemBase {
   }
 
 public void set(Double motorTopMaxRPM, Double motorBottomMaxRPM){
-
+  indexMotor = new TalonSRX(7);
+  indexMotor.set(ControlMode.PercentOutput, 1.0);
   m_pidControllerTop.setReference(motorTopMaxRPM, ControlType.kVelocity);
   m_pidControllerBottom.setReference(motorBottomMaxRPM, ControlType.kVelocity);
-
-
 }
 
 public void stop(){
