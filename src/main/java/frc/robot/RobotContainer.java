@@ -8,6 +8,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.OIConstants;
@@ -23,8 +24,8 @@ import frc.robot.commands.*;
 public class RobotContainer {
 
   //Intake Subsystem and Commands
-  IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-  IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
+  public static IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  public static IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
 
   //pneumatics Subsystem and Commands
   PneumaticsSubsystem pneumaticsSubsystem = new PneumaticsSubsystem();
@@ -45,8 +46,6 @@ public class RobotContainer {
   public static XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   public static XboxController m_otherController = new XboxController(OIConstants.kOtherControllerPort);
 
-  //private final AutonomousCommand m_autonomousCommand = new AutonomousCommand(m_drive, m_shooter);
-
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -54,7 +53,6 @@ public class RobotContainer {
 
     // Configure the button bindings
     configureButtonBindings();
-
   }
 
   public Shooter getShooterSubsystem() {return shooterSubsystem;}
@@ -66,10 +64,9 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //m_drive.arcadeDrive(m_driverController.getY(Hand.kRight), m_driverController.getX(Hand.kLeft));
      //Intake Subsystem and Commands
-    IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-    IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
+    // IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+    // IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
 
     final JoystickButton activateIntakeButton = new JoystickButton(m_driverController, 2);
     activateIntakeButton.whenHeld(intakeCommand);

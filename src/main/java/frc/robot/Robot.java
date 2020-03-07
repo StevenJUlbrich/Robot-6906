@@ -152,6 +152,13 @@ public class Robot extends TimedRobot {
       activateFeederCommand.cancel();
     }
 
+    if (RobotContainer.m_driverController.getRawAxis(3) > 0.0) {
+      RobotContainer.intakeCommand.execute();
+      System.out.println("Intake activated with R_2");
+    } else {
+      RobotContainer.intakeCommand.cancel();
+    }
+
   }
 
   @Override
