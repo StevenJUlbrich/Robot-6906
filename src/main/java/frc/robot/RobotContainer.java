@@ -7,15 +7,11 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.*;
 import frc.robot.Constants.OIConstants;
 import frc.robot.commands.*;
-import frc.robot.Constants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -26,29 +22,24 @@ import frc.robot.Constants;
  */
 public class RobotContainer {
 
+  //Intake Subsystem and Commands
+  IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
+  IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
 
-  //------
-   //Intake Subsystem and Commands
-   IntakeSubsystem intakeSubsystem = new IntakeSubsystem();
-   IntakeCommand intakeCommand = new IntakeCommand(intakeSubsystem);
+  //pneumatics Subsystem and Commands
+  PneumaticsSubsystem pneumaticsSubsystem = new PneumaticsSubsystem();
+  PneumaticsExtendPistonCommand pneumaticsExtendPistonCommand = new PneumaticsExtendPistonCommand(pneumaticsSubsystem);
+  PneumaticsRetractPistonCommand pneumaticsRetractPistonCommand = new PneumaticsRetractPistonCommand(pneumaticsSubsystem);
 
-   //pneumatics Subsystem and Commands
-   PneumaticsSubsystem pneumaticsSubsystem = new PneumaticsSubsystem();
-   PneumaticsExtendPistonCommand pneumaticsExtendPistonCommand = new PneumaticsExtendPistonCommand(pneumaticsSubsystem);
-   PneumaticsRetractPistonCommand pneumaticsRetractPistonCommand = new PneumaticsRetractPistonCommand(pneumaticsSubsystem);
+  //Shooter Subsystem and Command
+  Shooter shooterSubsystem = new Shooter(); //subsystem
+  ShooterLongshotCommand shooterLongshotCommand = new ShooterLongshotCommand(shooterSubsystem);
+  ShooterMediumshotCommand shooterMediumshotCommand = new ShooterMediumshotCommand(shooterSubsystem);
+  ShooterShortshotCommand shooterShortshotCommand = new ShooterShortshotCommand(shooterSubsystem);
+  ShooterDumpshotCommand shooterDumpshotCommand = new ShooterDumpshotCommand(shooterSubsystem);
 
-   //Shooter Subsystem and Command
-   Shooter shooterSubsystem = new Shooter(); //subsystem
-   ShooterLongshotCommand shooterLongshotCommand = new ShooterLongshotCommand(shooterSubsystem);
-   ShooterMediumshotCommand shooterMediumshotCommand = new ShooterMediumshotCommand(shooterSubsystem);
-   ShooterShortshotCommand shooterShortshotCommand = new ShooterShortshotCommand(shooterSubsystem);
-   ShooterDumpshotCommand shooterDumpshotCommand = new ShooterDumpshotCommand(shooterSubsystem);
-
-   //ActivateFeederCommand
-   ActivateFeederCommand activateFeederCommand = new ActivateFeederCommand(shooterSubsystem);
-   //------
-
-
+  //ActivateFeederCommand
+  ActivateFeederCommand activateFeederCommand = new ActivateFeederCommand(shooterSubsystem);
 
   //private final DriveTrain m_drive = new DriveTrain();
   public static XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -93,7 +84,6 @@ public class RobotContainer {
     extendPistonButton.whenHeld(pneumaticsExtendPistonCommand);
     retractPistonButton.whenHeld(pneumaticsRetractPistonCommand);
 
-
     //---- Shooter mappings and setting the values ----
 
     //High = B, Medium = A, Low = X
@@ -102,16 +92,10 @@ public class RobotContainer {
     final JoystickButton shortshotButton = new JoystickButton(m_otherController, Constants.A);
     final JoystickButton dumpshotButton = new JoystickButton(m_otherController, Constants.X);
 
-    //final JoystickButton activateFeederButton = new JoystickButton(m_otherController, 6);
-
     longshotButton.whenHeld(shooterLongshotCommand);
     mediumshotButton.whenHeld(shooterMediumshotCommand);
     shortshotButton.whenHeld(shooterShortshotCommand);
     dumpshotButton.whenHeld(shooterDumpshotCommand);
-
-    //activateFeederButton.whenHeld(activateFeederCommand);
-
-    
   }
 
   /**

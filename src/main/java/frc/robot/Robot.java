@@ -17,8 +17,6 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.commands.ActivateFeederCommand;
 import frc.robot.subsystems.*;
 
-
-
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
  * each mode, as described in the TimedRobot documentation. If you change the name of this class or
@@ -27,17 +25,13 @@ import frc.robot.subsystems.*;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-
   private static  RobotContainer m_robotContainer;
   private static DriveTrain m_drive = new DriveTrain();
   private static Shooter m_shooter;
   public static XboxController m_otherController = new XboxController(OIConstants.kOtherControllerPort);
   public Shooter shooterSubsystem;
   public ActivateFeederCommand activateFeederCommand;
-
   final JoystickButton activateFeederButton = new JoystickButton(m_otherController, 6);
-
-
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -49,13 +43,11 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
     shooterSubsystem = m_robotContainer.getShooterSubsystem();
-    activateFeederCommand = new ActivateFeederCommand(shooterSubsystem);
-    //m_drive = new DriveTrain();
-
-    
-    
+    activateFeederCommand = new ActivateFeederCommand(shooterSubsystem);  
   }
-    /**
+
+
+  /**
    * A simple getter method for RobotContainer.java
    * 
    * @return m_robotContainer
@@ -146,11 +138,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    m_drive.arcadeDrive(RobotContainer.m_driverController.getY(Hand.kRight) * -1, RobotContainer.m_driverController.getX(Hand.kLeft));
-    System.out.println("Y value: " + RobotContainer.m_driverController.getY(Hand.kRight));
-    System.out.println("X value: " + RobotContainer.m_driverController.getX(Hand.kLeft));
+    final double forward = RobotContainer.m_driverController.getY(Hand.kLeft) * -1;
+    final double rotation = RobotContainer.m_driverController.getX(Hand.kRight);
+    m_drive.arcadeDrive(forward, rotation);
 
-    if( activateFeederButton.get()){
+    System.out.println("X value: " + forward);
+    System.out.println("Y value: " + rotation);
+
+    if(activateFeederButton.get()){
       activateFeederCommand.execute();
     }
     else{
