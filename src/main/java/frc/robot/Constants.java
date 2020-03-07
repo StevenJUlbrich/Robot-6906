@@ -8,8 +8,8 @@
 package frc.robot;
 
 import com.revrobotics.CANSparkMax.IdleMode;
-
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
+import edu.wpi.first.wpilibj.XboxController.*;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -88,6 +88,33 @@ public final class Constants {
     public static final int RSX = 4;
     public static final int RSY = 5;
 
+    public static final class XboxController{
+
+        public static final int button_A = 1;
+        public static final int button_B = 2;
+        public static final int button_X = 3;
+        public static final int button_Y = 4;
+    
+        public static final int left_Bumper = 5;
+        public static final int right_Bumper = 6;
+    
+        public static final int button_BACK = 7;
+        public static final int button_START = 8;
+    
+        public static final int left_Trigger = 2;
+        public static final int right_Trigger = 3;
+    
+        public static final int left_Stick = 9;
+        public static final int right_Stick = 10;
+    
+        public static final int LY = 1;
+        public static final int RX = 4;
+    
+        public static final int LSX = 0;
+        public static final int LSY = 1;
+        public static final int RSX = 4;
+        public static final int RSY = 5;
+    }
 
  
 
