@@ -33,9 +33,60 @@ public final class Constants {
     public static final int current40AmpPeakCurrentDuration = 200;
     public static final int current40AmpContinuousCurrentLimit = 35;
 
-    // Xbox-Controller
-    public static final int portXboxController = 0;
+    //motor speeds
+    public static final double LONG_SHOT_TOP_MOTOR = 9500;
+    public static final double LONG_SHOT_BOTTOM_MOTOR = 14000;
 
+    public static final double MEDIUM_SHOT_TOP_MOTOR = 8500;
+    public static final double MEDIUM_SHOT_BOTTOM_MOTOR = 10000;
+
+    public static final double SHORT_SHOT_TOP_MOTOR = 10000;
+    public static final double SHORT_SHOT_BOTTOM_MOTOR = 10000;
+
+    public static final double DUMP_SHOT_TOP_MOTOR = 9000;
+    public static final double DUMP_SHOT_BOTTOM_MOTOR = 9000;
+
+     /*
+    XBOX BUTTON MAP KEY:
+    1 = A
+    2 = B
+    3 = X
+    4 = Y
+    5 = left bumper
+    6 = right bumper
+    7 = back
+    8 = start
+    9 = left stick click
+    10 = right stick click
+    */
+
+    // Xbox Map
+    public final int kXboxControllerPort = 0;
+
+    public static final int A = 1;
+    public static final int B = 2;
+    public static final int X = 3;
+    public static final int Y = 4;
+
+    public static final int LB = 5;
+    public static final int RB = 6;
+
+    public static final int BACK = 7;
+    public static final int START = 8;
+
+    public static final int LT = 2;
+    public static final int RT = 3;
+
+    public static final int LS = 9;
+    public static final int RS = 10;
+
+    public static final int LY = 1;
+    public static final int RX = 4;
+
+    public static final int LSX = 0;
+    public static final int LSY = 1;
+    public static final int RSX = 4;
+    public static final int RSY = 5;
 
 
  
@@ -84,7 +135,7 @@ public final class Constants {
         public static final double kToleranceDegrees = 2.0f;
 
 		public static final boolean LeftInvertedBoolean = false;
-		public static final IdleMode IdleMode = null;
+		public static final IdleMode Idlemode = IdleMode.kBrake;
 		public static final boolean RightInvertedBoolean = false;
         public static final double kDriveGearRatio = 10.71;
         public static final double kWheelDiameterMeters = 0.1524;
@@ -150,8 +201,8 @@ public final class Constants {
         public static final class ShooterConstants {
 
             // CAN
-            public static final int topMotorID = 6;
-            public static final int bottomMotorID = 7;
+            public static final int topMotorID = 5;
+            public static final int bottomMotorID = 6;
 
             public static final double speed = 0.5;
             public static final double backSpeed = -0.4;
@@ -175,6 +226,17 @@ public final class Constants {
 
             public static final double RPMLowLimit = 700;
             public static final double RPMHighLimit = 4800;
+
+            //PID
+            public static final double kP =  5e-5;
+            public static final double kI =  1e-6;
+            public static final double kD = 0;
+            public static final double kIz = 0;
+            public static final double kFF = 0.000015;
+            public static final double kMaxOutput = 1;
+            public static final double kMinOutput = -1;
+            
+
         }
 
         /**

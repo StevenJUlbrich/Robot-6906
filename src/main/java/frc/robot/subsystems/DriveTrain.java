@@ -20,10 +20,16 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANEncoder;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.kauailabs.navx.frc.AHRS;
+//import edu.wpi.first.networktables.NetworkTable;
+//import edu.wpi.first.networktables.NetworkTableInstance;
+
+//import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+//import edu.wpi.first.networktables.NetworkTable;
 
 public class DriveTrain extends SubsystemBase {
 
@@ -39,7 +45,7 @@ public class DriveTrain extends SubsystemBase {
   private final AHRS m_gyro;
 
   // Odometry Class for Tracking Robot Pose;
-  private final DifferentialDriveOdometry m_odometry;
+  //private final DifferentialDriveOdometry m_odometry;
 
   Supplier<Double> gryoAngleRadians;
   DifferentialDrive m_drive;
@@ -50,7 +56,7 @@ public class DriveTrain extends SubsystemBase {
     m_leftMaster = new CANSparkMax(DriveConstants.leftMotorMasterID, MotorType.kBrushless);
     m_leftMaster.restoreFactoryDefaults();
     m_leftMaster.setInverted(DriveConstants.LeftInvertedBoolean);
-    m_leftMaster.setIdleMode(DriveConstants.IdleMode);
+    m_leftMaster.setIdleMode(DriveConstants.Idlemode);
     m_leftEncoder = m_leftMaster.getEncoder();
     m_leftEncoder.setPositionConversionFactor(DriveConstants.kNeoPositionConversionFactor);
     m_leftEncoder.setVelocityConversionFactor(DriveConstants.kNeoVelocityConversionFactor);
@@ -58,28 +64,28 @@ public class DriveTrain extends SubsystemBase {
     // Define and Build Left Slave NEO Motor
     m_leftSlave = new CANSparkMax(DriveConstants.leftMotorSlaveID, MotorType.kBrushless);
     m_leftSlave.restoreFactoryDefaults();
-    m_leftSlave.setIdleMode(DriveConstants.IdleMode);
+    m_leftSlave.setIdleMode(DriveConstants.Idlemode);
     m_leftSlave.follow(m_leftMaster);
 
     // Define and Build Right Master NEO Motor
     m_rightMaster = new CANSparkMax(DriveConstants.rightMotorMasterID, MotorType.kBrushless);
     m_rightMaster.restoreFactoryDefaults();
     m_rightMaster.setInverted(DriveConstants.RightInvertedBoolean);
-    m_rightMaster.setIdleMode(DriveConstants.IdleMode);
+    m_rightMaster.setIdleMode(DriveConstants.Idlemode);
     m_rightEncoder = m_rightMaster.getEncoder();
     m_rightEncoder.setPositionConversionFactor(DriveConstants.kNeoPositionConversionFactor);
     m_rightEncoder.setVelocityConversionFactor(DriveConstants.kNeoVelocityConversionFactor);
 
     m_rightSlave = new CANSparkMax(DriveConstants.rightMotorSlaveID, MotorType.kBrushless);
     m_rightSlave.restoreFactoryDefaults();
-    m_rightSlave.setIdleMode(DriveConstants.IdleMode);
+    m_rightSlave.setIdleMode(DriveConstants.Idlemode);
     m_rightSlave.follow(m_rightMaster);
 
     m_drive = new DifferentialDrive(m_leftMaster, m_rightMaster);
     m_drive.setDeadband(0);
 
     resetEncoders();
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
+    //m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(getHeading()));
 
     //
     // Configure gyro
@@ -127,9 +133,9 @@ public class DriveTrain extends SubsystemBase {
    *
    * @return The pose.
    */
-  public Pose2d getPose() {
-    return m_odometry.getPoseMeters();
-  }
+  /*public Pose2d getPose() {
+    //return m_odometry.getPoseMeters();
+  }*/
 
   /**
    * Returns the current wheel speeds of the robot.
@@ -146,7 +152,7 @@ public class DriveTrain extends SubsystemBase {
     // Update the odometry in the periodic block
     // Note that the setPositionConversionFactor() has been applied to the left and
     // right encoders in the constructor.
-    m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
+    //m_odometry.update(Rotation2d.fromDegrees(getHeading()), m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
   }
 
   /**
@@ -156,8 +162,14 @@ public class DriveTrain extends SubsystemBase {
    */
   public void resetOdometry(final Pose2d pose) {
     resetEncoders();
-    m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
+    //m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
   }
+
+
+
+
+
+
 
   /**
    * Drives the robot using arcade controls.
@@ -168,6 +180,11 @@ public class DriveTrain extends SubsystemBase {
   public void arcadeDrive(final double fwd, final double rot) {
     m_drive.arcadeDrive(fwd, rot);
   }
+
+
+
+
+
 
   /**
    * Controls the left and right sides of the drive directly with voltages.
@@ -221,7 +238,17 @@ public class DriveTrain extends SubsystemBase {
     m_drive.setMaxOutput(maxOutput);
   }
 
-
+  //IMU AHRS 
+  public double getPitch() {
+    return m_gyro.getPitch();
+  }
+  
+  public double getYaw() {
+    return m_gyro.getYaw();
+  }
+  public double getRoll() {
+    return m_gyro.getRoll();
+  }
   /**
    * Zeroes the heading of the robot.
    */
@@ -235,8 +262,14 @@ public class DriveTrain extends SubsystemBase {
    * @return the robot's heading in degrees, from 180 to 180
    */
   public double getHeading() {
-        return Math.IEEEremainder(m_gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+        //return Math.IEEEremainder(m_gyro.getAngle(), 360) * (DriveConstants.kGyroReversed ? -1.0 : 1.0);
+        return 0;
   }
+
+public void stopMotors() {
+  m_leftMaster.setVoltage(0);
+  m_rightMaster.setVoltage(0);
+}
 
  
 

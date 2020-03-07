@@ -8,8 +8,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.OIConstants;
+import frc.robot.commands.ActivateFeederCommand;
+import frc.robot.subsystems.*;
 
 
 
@@ -22,7 +28,16 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  private static  RobotContainer m_robotContainer;
+  private static DriveTrain m_drive = new DriveTrain();
+  private static Shooter m_shooter;
+  public static XboxController m_otherController = new XboxController(OIConstants.kOtherControllerPort);
+  public Shooter shooterSubsystem;
+  public ActivateFeederCommand activateFeederCommand;
+
+  final JoystickButton activateFeederButton = new JoystickButton(m_otherController, 6);
+
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -33,8 +48,41 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    shooterSubsystem = m_robotContainer.getShooterSubsystem();
+    activateFeederCommand = new ActivateFeederCommand(shooterSubsystem);
+    //m_drive = new DriveTrain();
+
+    
+    
+  }
+    /**
+   * A simple getter method for RobotContainer.java
+   * 
+   * @return m_robotContainer
+   */
+  public static RobotContainer getRobotContainer() {
+    return m_robotContainer;
   }
 
+  /**
+   * A simple getter method for Drivetrain.java
+   * 
+   * @return m_drive
+   */
+  public static DriveTrain getDrivetrain() {
+    //return m_drive;
+    return null;
+  }
+
+      /**
+   * A simple getter method for Shooter.java
+   * 
+   * @return m_shooter
+   */
+  public static Shooter getShooter() {
+    return m_shooter;
+  }
+  
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
    * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
@@ -67,7 +115,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    //m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -98,6 +146,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    m_drive.arcadeDrive(RobotContainer.m_driverController.getY(Hand.kRight) * -1, RobotContainer.m_driverController.getX(Hand.kLeft));
+    System.out.println("Y value: " + RobotContainer.m_driverController.getY(Hand.kRight));
+    System.out.println("X value: " + RobotContainer.m_driverController.getX(Hand.kLeft));
+
+    if( activateFeederButton.get()){
+      activateFeederCommand.execute();
+    }
+    else{
+      activateFeederCommand.cancel();
+    }
+
   }
 
   @Override
