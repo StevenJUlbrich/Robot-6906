@@ -33,7 +33,6 @@ public class PneumaticsSubsystem extends SubsystemBase {
     } catch(Exception e) {
       e.printStackTrace();
     }
-    
   }
 
   @Override
