@@ -14,13 +14,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.I2C;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
-import edu.wpi.first.wpilibj.geometry.Rotation2d;
 
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANEncoder;
 
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -165,12 +162,7 @@ public class DriveTrain extends SubsystemBase {
     //m_odometry.resetPosition(pose, Rotation2d.fromDegrees(getHeading()));
   }
 
-
-
-
-
-
-
+  
   /**
    * Drives the robot using arcade controls.
    *
@@ -180,10 +172,6 @@ public class DriveTrain extends SubsystemBase {
   public void arcadeDrive(final double fwd, final double rot) {
     m_drive.arcadeDrive(fwd, rot);
   }
-
-
-
-
 
 
   /**
@@ -266,14 +254,9 @@ public class DriveTrain extends SubsystemBase {
         return 0;
   }
 
-public void stopMotors() {
-  m_leftMaster.setVoltage(0);
-  m_rightMaster.setVoltage(0);
-}
-
- 
-
- 
-
+  public void stopMotors() {
+    m_leftMaster.setVoltage(0);
+    m_rightMaster.setVoltage(0);
+  }
 
 }

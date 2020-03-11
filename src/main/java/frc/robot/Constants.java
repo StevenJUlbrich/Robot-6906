@@ -88,9 +88,6 @@ public final class Constants {
     public static final int RSX = 4;
     public static final int RSY = 5;
 
-
- 
-
     /**
      * 
      * Drive Constants
@@ -185,13 +182,6 @@ public final class Constants {
     
         // Example value only - as above, this must be tuned for your drive!
         public static final double kPDriveVel = 1.34; // value from characterization tool is 13.4!
-       
-
-
-        
-        
-
-
 
         /**
          * 
@@ -235,8 +225,6 @@ public final class Constants {
             public static final double kFF = 0.000015;
             public static final double kMaxOutput = 1;
             public static final double kMinOutput = -1;
-            
-
         }
 
         /**
@@ -299,7 +287,4 @@ public final class Constants {
                 new String[] {"paths/Auto_pos3_path1_segment1.wpilib.json", "paths/Auto_pos3_path1_segment2.wpilib.json",
                     "paths/Auto_pos3_path1_segment3.wpilib.json", "paths/Auto_pos3_path1_segment4.wpilib.json"};
         }
-
-	
-
 }
